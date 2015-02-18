@@ -48,7 +48,7 @@
 					           		<td>$row[ime] $row[prezime]</td>  
 					           		<td>$row[imeFirme]</td> 
 					           		<td> <input id='in$b' type='number' name='$row[imeFirme]' value='$row[brojAkcija]' min='0'> <input type='hidden' name='id' value='$row[kid]' /> </td>
-					           		<td> <a href='#'> Kreni </a> </td> 
+					           		<td> <a id='kreni$b' href='#'> Kreni </a> </td> 
 				           		</tr>";
 						}
 						echo "</table>";
