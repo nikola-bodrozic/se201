@@ -40,7 +40,7 @@
 					$b = 0;
 					if ($count > 0) {
 						echo "<table border='1'>";
-						echo "<tr> <th>id</th> <th>ime i prezime</th> <th>Ime Firme</th>  <th>Broj Akcija</th> </tr>";
+						echo "<tr> <th>id</th> <th>ime i prezime</th> <th>Ime Firme</th>  <th>Broj Akcija</th> <th>&nbsp;</th></tr>";
 						while ($row = $stmt -> fetch()) {
 							++$b;
 							echo "<tr id='red$b'>  
@@ -114,13 +114,11 @@
 					var id = koren.find("input[type='hidden']").val(); //koren.find('td:eq(0)').html();
 					var firma =  koren.find('input').attr('name'); //koren.find('td:eq(2)').html();
 					var brAkcija = koren.find('input').val();
-					//alert(id+firma+brAkcija);
 					$.post("obradiAJAX.php", {
 						id : id,
 						firma : firma,
 						brAkcija : brAkcija
 					}).done(function(data) {
-						// alert("Data Loaded: " + data);
 						$('#rez').html(data);
 					});
 				});
