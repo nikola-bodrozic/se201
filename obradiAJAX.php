@@ -6,6 +6,8 @@ $brAkcija = $_POST["brAkcija"];
 $ba = 0;
 require 'include/veza.php';
 
+// Provera broja akcija - da li je broj akcija ispravan
+// Ne mozete preneti više akcija nego što ih prodavac ima
 try {
 	$conn = DB_Instance::getDBO();
 	$conn -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -90,7 +92,6 @@ if ($count == 0) {
 		}
 		echo "</table>";
 	}
-
 } else {
 	$conn = DB_Instance::getDBO();
 	$conn -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -106,13 +107,13 @@ if ($count == 0) {
 	$q = $conn -> prepare("UPDATE `se201_portfolio` SET brojAkcija = $brAkcija WHERE `klijent_id`= :klijent_id AND `imeFirme`=:imeFirme");
 	$q -> execute(array(':klijent_id' => $klijent_id, ':imeFirme' => $firma));
 
-	// dodavanje akcija kupcu na postojeci iznos
+	
 	$conn = DB_Instance::getDBO();
 	$conn -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	$q = $conn -> prepare("SELECT brojAkcija FROM `se201_portfolio` WHERE `klijent_id`= :klijent_id AND `imeFirme`=:imeFirme");
 	$q -> execute(array(':klijent_id' => $_SESSION['kupac_id'], ':imeFirme' => $firma));
 	while ($row = $q -> fetch()) {
-		// $pba postojeci broj akcija
+		// dodavanje akcija kupcu na postojeci iznos
 		$pba = $row[brojAkcija] + $ba2;
 	}
 

@@ -47,7 +47,7 @@
 					           		<td>$row[kid]</td>  
 					           		<td>$row[ime] $row[prezime]</td>  
 					           		<td>$row[imeFirme]</td> 
-					           		<td> <input id='in$b' type='number' name='$row[imeFirme]'  value='$row[brojAkcija]' min='0'> </td>
+					           		<td> <input id='in$b' type='number' name='$row[imeFirme]' value='$row[brojAkcija]' min='0'> <input type='hidden' name='id' value='$row[kid]' /> </td>
 					           		<td> <a href='#'> Kreni </a> </td> 
 				           		</tr>";
 						}
@@ -55,6 +55,7 @@
 					}
 					?>
 				</div>
+				<input type='hidden' name='id' value='' />
 				<div class="col-md-12">
 					<h1>Portfolio za
 					<?php
@@ -110,14 +111,10 @@
 			$(document).ready(function() {
 				$("a").click(function(event) {
 					var koren = $(this).parent().parent();
-					var id = koren.find('td:eq(0)').html();
-					var firma = koren.find('td:eq(2)').html();
+					var id = koren.find("input[type='hidden']").val(); //koren.find('td:eq(0)').html();
+					var firma =  koren.find('input').attr('name'); //koren.find('td:eq(2)').html();
 					var brAkcija = koren.find('input').val();
-					//var in = '#in'+event.target.id;
-					//$(in).attr('max') = $(in).val();
-					// alert(event.target.id);
-					// alert(id + firma + brAkcija);
-
+					//alert(id+firma+brAkcija);
 					$.post("obradiAJAX.php", {
 						id : id,
 						firma : firma,
