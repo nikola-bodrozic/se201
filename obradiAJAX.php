@@ -42,6 +42,7 @@ while ($row = $q -> fetch()) {
 
 }
 
+// Da li kupac vec poseduje akcije firme kojom se trguje?
 try {
 	$conn = DB_Instance::getDBO();
 	$conn -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -52,6 +53,8 @@ try {
 	printf("Poruka: <strong>%s</strong> <br> Kod Greške: <strong>%s</strong>", $Exception -> getMessage(), $Exception -> getCode());
 }
 
+// ne poseduje akcije firme kojom se trguje
+// potrban je SELECT UPDATE i INSERT
 if ($count == 0) {
 	try {
 		$conn = DB_Instance::getDBO();
@@ -92,6 +95,8 @@ if ($count == 0) {
 		}
 		echo "</table>";
 	}
+// poseduje akcije firme kojom se trguje
+// potreban je SELECT UPDATE SELECT UPDATE
 } else {
 	$conn = DB_Instance::getDBO();
 	$conn -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
