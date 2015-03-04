@@ -6,48 +6,46 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="description" content="projekni zadatak iz se201">
 		<meta name="author" content="Nikola">
-		<title>Berza</title>
+		<title>Berza :: Profit Klijenata</title>
 		<!-- Latest compiled and minified CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 		<!-- moji CSS stilovi -->
 		<link href="css/stil.css" rel="stylesheet">
-		<script>
-			function naDrugiKorak() {
-				window.location.assign("korak2.php?id=" + $("#klijent").val());
-				//alert( $( "#klijent" ).val() );
-			}
-		</script>
 	</head>
 	<body>
 		<div id="container">
 			<div class="row">
 				<div class="col-md-12">
-					<h1> <a href="/">Berza</a> - Korak 1 </h1>
-					<h3> <a href="profit.php">Profit klijenata</a> </h3>
+					<h1> <a href="/">Berza</a> </h1>
+					<h3>Profit klijenata</h3>
 				</div>
-				<div class="col-md-3">
-					Odaberi Kupca
-				</div>
-				<div class="col-md-9">
+				<div class="col-md-12">
 					<?php
 					require 'include/veza.php';
 					try {
 						$conn = DB_Instance::getDBO();
 						$conn -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-						$stmt = $conn -> query("SELECT * FROM `se201_klijent`");
+						$stmt = $conn -> query("SELECT klijent_id, ime, prezime, p.brojAkcija, p.imeFirme, p.brojAkcija*c.cena as profit FROM se201_portfolio p JOIN se201_cenaPoAkciji c ON p.imeFirme = c.imeFirme JOIN se201_klijent k ON k.id = klijent_id ");
 						$stmt -> execute();
 						$count = $stmt -> rowCount();
 					} catch (PDOException $Exception) {
 						printf("Poruka: <strong>%s</strong> <br> Kod Greške: <strong>%s</strong>", $Exception -> getMessage(), $Exception -> getCode());
 					}
-					echo "<select name='klijent' id='klijent' onchange='naDrugiKorak()'>";
-					echo "<option value='--'> -- </option>";
 					if ($count > 0) {
+						echo "<table border='1'>";
+						echo "<tr> <th>ID klijenta</th> <th>Ime</th> <th>Prezime</th> <th>Broj Akcija</th>  <th>Ime Firme</th> <th>Profit</th> </tr>";
 						while ($row = $stmt -> fetch()) {
-							echo "<option value='$row[id]'>$row[id] - $row[ime] $row[prezime]</option>";
+							echo "<tr> 
+							<td>$row[klijent_id]</td>
+							<td>$row[ime]</td>
+							<td>$row[prezime]</td>
+							<td>$row[brojAkcija]</td>
+							<td>$row[imeFirme]</td>
+							<td>$row[profit]</td>							
+							</tr>";
 						}
+						echo "</table>";
 					}
-					echo "</select>";
 					?>
 				</div>
 			</div>
